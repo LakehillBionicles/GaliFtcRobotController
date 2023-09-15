@@ -42,11 +42,11 @@ public class GaliHardware extends LinearOpMode {
         wrist = hwMap.get(Servo.class, "wrist");
 
         fpd.setDirection(DcMotorSimple.Direction.FORWARD);
-        bpd.setDirection(DcMotorSimple.Direction.FORWARD);
+        bpd.setDirection(DcMotorSimple.Direction.REVERSE);
         fsd.setDirection(DcMotorSimple.Direction.FORWARD);
         bsd.setDirection(DcMotorSimple.Direction.FORWARD);
 
-        elbow.setDirection(DcMotorSimple.Direction.FORWARD);
+        elbow.setDirection(DcMotorSimple.Direction.REVERSE);
         shoulder.setDirection(DcMotorSimple.Direction.FORWARD);
 
         fpd.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
