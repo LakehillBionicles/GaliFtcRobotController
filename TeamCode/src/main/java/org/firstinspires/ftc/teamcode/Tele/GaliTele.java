@@ -21,6 +21,7 @@ public class GaliTele extends LinearOpMode {
 
             robot.shoulder.setPower(-gamepad2.left_stick_y);
             robot.elbow.setPower(-gamepad2.right_stick_y);
+            //gonna need PID some presets into the abyx for like pick up, score high/mid/low front, score high/mid/low back, and hang
 
             if(gamepad2.left_bumper){
                 robot.handPort.setPosition(robot.handPortOpen);
