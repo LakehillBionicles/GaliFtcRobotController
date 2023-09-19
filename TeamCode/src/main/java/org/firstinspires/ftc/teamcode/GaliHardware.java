@@ -29,7 +29,7 @@ public class GaliHardware extends LinearOpMode {
     public void init(HardwareMap ahwMap) {
         hwMap = ahwMap;
 
-        fpd = hwMap.get(DcMotorEx.class, "fpd" );
+        fpd = hwMap.get(DcMotor.class, "fpd" );
         bpd = hwMap.get(DcMotor.class, "bpd");
         fsd = hwMap.get(DcMotor.class, "fsd");
         bsd = hwMap.get(DcMotor.class, "bsd");
@@ -47,7 +47,7 @@ public class GaliHardware extends LinearOpMode {
         bsd.setDirection(DcMotorSimple.Direction.FORWARD);
 
         elbow.setDirection(DcMotorSimple.Direction.REVERSE);
-        shoulder.setDirection(DcMotorSimple.Direction.FORWARD);
+        shoulder.setDirection(DcMotorSimple.Direction.REVERSE);
 
         fpd.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         bpd.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
