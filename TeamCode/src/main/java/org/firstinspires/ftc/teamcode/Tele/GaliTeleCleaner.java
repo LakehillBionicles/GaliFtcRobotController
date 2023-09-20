@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Tele;
 
+import com.arcrobotics.ftclib.command.button.GamepadButton;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import static com.arcrobotics.ftclib.gamepad.GamepadKeys.Button.*;
@@ -21,12 +22,14 @@ import static org.firstinspires.ftc.teamcode.Subsystems.HandSubsystem.HandPos.*;
 public class GaliTeleCleaner extends LinearOpMode {
     GaliHardware robot = new GaliHardware();
 
+    ArmPos armPos = DOWN_FRONT;
+
     ArmSubsystem galiArm = new ArmSubsystem(robot.elbow, robot.shoulder, robot.wrist);
     HandSubsystem galiHand = new HandSubsystem(robot.handPort, robot.handStar);
     DriveSubsystem galiDrive = new DriveSubsystem(robot.fpd, robot.bpd, robot.fsd, robot.bsd);
 
-    GamepadEx baseController = new GamepadEx(gamepad1);
-    GamepadEx armController = new GamepadEx(gamepad2);
+    //GamepadEx baseController = new GamepadEx(gamepad1);
+    //GamepadEx armController = new GamepadEx(gamepad2);
     public void runOpMode() {
         robot.init(hardwareMap);
         galiArm.resetArm();
@@ -34,28 +37,36 @@ public class GaliTeleCleaner extends LinearOpMode {
         waitForStart();
 
         while (opModeIsActive()) {
-            galiDrive.setDrivePowerTele(-baseController.getLeftY(), baseController.getLeftX(), baseController.getRightX());
+            //galiDrive.setDrivePowerTele(-baseController.getLeftY(), baseController.getLeftX(), baseController.getRightX());
 
             galiArm.setArmPos(getArmPos());
 
-            galiHand.setHandPosPort(getHandPosPort());
-            galiHand.setHandPosStar(getHandPosStar());
+            //galiHand.setHandPosPort(getHandPosPort());
+            //galiHand.setHandPosStar(getHandPosStar());
         }
     }
     public ArmPos getArmPos(){
-        ArmPos armPos = null;
-        if(armController.getButton(DPAD_DOWN)){ armPos = DOWN_FRONT;}
-        if(armController.getButton(DPAD_LEFT)){ armPos = LOW_FRONT;}
-        if(armController.getButton(DPAD_UP)){ armPos = HIGH_FRONT;}
-        if(armController.getButton(DPAD_RIGHT)){ armPos = MID_FRONT;}
-        if(armController.getButton(X)){ armPos = LOW_BACK;}
-        if(armController.getButton(Y)){ armPos = HIGH_BACK; }
-        if(armController.getButton(B)){ armPos = MID_BACK;}
+        if(gamepad2.dpad_up){
+            armPos = HIGH_FRONT;
+        }
+        if(gamepad2.dpad_right){
+            armPos = MID_FRONT;
+        }
+        if(gamepad2.dpad_left){
+            armPos = LOW_FRONT;
+        }
+        if(gamepad2.dpad_down){
+            armPos = DOWN_FRONT;
+        }
+        /*if(armControlButton(DPAD_DOWN).get()){ armPos = DOWN_FRONT;}
+        if(armControlButton(DPAD_LEFT).get()){ armPos = LOW_FRONT;}
+        if(armControlButton(DPAD_RIGHT).get()){ armPos = MID_FRONT;}
+        if(armControlButton(DPAD_UP).get()){ armPos = HIGH_FRONT;}*/
 
         return armPos;
     }
 
-    public HandPos getHandPosPort(){
+    /*public HandPos getHandPosPort(){
         HandPos handPos = null;
         if(armController.getButton(LEFT_BUMPER)){
             handPos = CLOSED;
@@ -64,9 +75,9 @@ public class GaliTeleCleaner extends LinearOpMode {
         }
 
         return handPos;
-    }
+    }*/
 
-    public HandPos getHandPosStar(){
+    /*public HandPos getHandPosStar(){
         HandPos handPos = null;
         if(armController.getButton(RIGHT_BUMPER)){
             handPos = CLOSED;
@@ -74,5 +85,7 @@ public class GaliTeleCleaner extends LinearOpMode {
             handPos = OPEN;
         }
         return handPos;
-    }
+    }*/
+
+    //public GamepadButton armControlButton(GamepadKeys.Button button){ return armController.getGamepadButton(button); }
 }

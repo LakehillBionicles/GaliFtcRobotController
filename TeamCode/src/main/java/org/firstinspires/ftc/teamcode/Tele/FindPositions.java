@@ -16,9 +16,9 @@ public class FindPositions extends OpMode {
 
     public static int elbowTarget = 0;
     public static int shoulderTarget = 0;
-    public static double wristTarget = 0;
-    public static double handPortTarget = 0;
-    public static double handStarTarget = 0;
+    public static double wristTarget = 1;
+    public static double handPortTarget = 0.6;
+    public static double handStarTarget = 0.1;
 
     @Override
     public void init(){
@@ -38,7 +38,7 @@ public class FindPositions extends OpMode {
         robot.shoulder.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         robot.shoulder.setPower(.25);
 
-        robot.wrist.setPosition(wristTarget);
+        //robot.wrist.setPosition(wristTarget);
 
         robot.handPort.setPosition(handPortTarget);
         robot.handStar.setPosition(handStarTarget);

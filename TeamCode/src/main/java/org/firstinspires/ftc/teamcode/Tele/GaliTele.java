@@ -2,14 +2,21 @@ package org.firstinspires.ftc.teamcode.Tele;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.GaliHardware;
+import org.firstinspires.ftc.teamcode.Subsystems.ArmSubsystem;
+import static org.firstinspires.ftc.teamcode.Subsystems.ArmSubsystem.ArmPos.*;
 
 @TeleOp
 public class GaliTele extends LinearOpMode {
     GaliHardware robot = new GaliHardware();
+    ArmSubsystem.ArmPos armTarget = DOWN_FRONT;
+
     public void runOpMode() {
         robot.init(hardwareMap);
+
+        resetArm();
 
         waitForStart();
 
@@ -19,9 +26,7 @@ public class GaliTele extends LinearOpMode {
             robot.fsd.setPower(-gamepad1.left_stick_y - gamepad1.left_stick_x - gamepad1.right_stick_x);
             robot.bsd.setPower(-gamepad1.left_stick_y + gamepad1.left_stick_x - gamepad1.right_stick_x);
 
-            robot.shoulder.setPower(-gamepad2.left_stick_y);
-            robot.elbow.setPower(-gamepad2.right_stick_y);
-            //gonna need PID some presets into the abyx for like pick up, score high/mid/low front, score high/mid/low back, and hang
+            armToPosition(getArmTarget());
 
             if(gamepad2.left_bumper){
                 robot.handPort.setPosition(robot.handPortOpen);
@@ -42,7 +47,50 @@ public class GaliTele extends LinearOpMode {
                 robot.wrist.setPosition(robot.wristScore);
             }
         }
+    }
 
+    public ArmSubsystem.ArmPos getArmTarget(){
+        if(gamepad2.dpad_up){
+            armTarget = HIGH_FRONT;
+        }
+        if(gamepad2.dpad_right){
+            armTarget = MID_FRONT;
+        }
+        if(gamepad2.dpad_left){
+            armTarget = LOW_FRONT;
+        }
+        if(gamepad2.dpad_down){
+            armTarget = DOWN_FRONT;
+        }
+        return armTarget;
+    }
+
+    public void armToPosition(ArmSubsystem.ArmPos targetPos){
+        setArmTarget(targetPos.getElbowPos(), targetPos.getShoulderPos());
+        setArmMode(DcMotor.RunMode.RUN_TO_POSITION);
+        setArmPower(.25);
+    }
+
+    public void setArmMode(DcMotor.RunMode runMode){
+        robot.elbow.setMode(runMode);
+        robot.shoulder.setMode(runMode);
+    }
+
+    public void setArmTarget(int targetElbow, int targetShoulder){
+        robot.elbow.setTargetPosition(targetElbow);
+        robot.shoulder.setTargetPosition(targetShoulder);
+    }
+
+    public void resetArm(){
+        robot.elbow.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.shoulder.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        robot.elbow.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        robot.shoulder.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+    }
+
+    public void setArmPower(double power) {
+        robot.elbow.setPower(power);
+        robot.shoulder.setPower(power);
     }
 }
-
