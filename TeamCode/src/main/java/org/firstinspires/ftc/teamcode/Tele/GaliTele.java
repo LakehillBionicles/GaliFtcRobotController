@@ -17,6 +17,10 @@ public class GaliTele extends LinearOpMode {
         robot.init(hardwareMap);
 
         resetArm();
+        robot.POW.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.BOW.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.bsd.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
 
         waitForStart();
 
@@ -46,6 +50,11 @@ public class GaliTele extends LinearOpMode {
             if (gamepad2.b){
                 robot.wrist.setPosition(robot.wristScore);
             }
+
+            telemetry.addData("POW", robot.POW.getCurrentPosition());
+            telemetry.addData("BOW", robot.BOW.getCurrentPosition());
+            telemetry.addData("SOW", robot.bsd.getCurrentPosition());
+            telemetry.update();
         }
     }
 
