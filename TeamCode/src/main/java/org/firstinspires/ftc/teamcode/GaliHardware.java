@@ -6,11 +6,14 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 
 public class GaliHardware extends LinearOpMode {
     public DcMotor fpd = null, bpd = null, fsd = null, bsd = null, BOW = null, POW = null;
     public DcMotor elbow = null, shoulder = null;
     public Servo handPort = null, handStar = null, wrist = null;
+
+    public ColorSensor colorSensor = null;
 
     public double handPortOpen = 0, handPortClosed = 0;
     public double handStarOpen = 0, handStarClosed = 0;
@@ -76,7 +79,6 @@ public class GaliHardware extends LinearOpMode {
 
         elbow.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         shoulder.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
 
     }
 }
